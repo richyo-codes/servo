@@ -946,8 +946,9 @@ impl WindowProxy {
                     .expect("Must always be fully active"),
             ))
         } else if let Some(parent_proxy) = self.parent() {
-            // Step 4. Assert: parentDoc is fully active.
-            assert!(parent_proxy.currently_active().is_some());
+            // A child navigation can finish after its parent becomes inactive.
+            // The origin query returns None in that case, just like the
+            // inactive parent document check above.
             parent_proxy.document_origin_and_internal_ancestor_origin_objects_list()
         } else {
             None
